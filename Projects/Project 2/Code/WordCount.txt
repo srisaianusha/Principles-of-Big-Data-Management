@@ -1,0 +1,54 @@
+import org.apache.spark
+import org.apache.spark.{SparkConf, SparkContext}
+import java.io.{File, PrintWriter}
+
+
+/**
+  * Created by Sri Sai Anusha on 30-03-2017.
+  */
+
+object WordCount {
+
+  def main(args: Array[String]): Unit = {
+    System.setProperty("hadoop.home.dir", "C:\\Users\\Sri Sai Anusha\\Desktop\\Winutils")
+    val inputFile = "D:/Sem II/PB/Project 2/output.txt"
+    val outputFile = "D:/Sem II/PB/Project 2/outputFile"
+    val conf = new SparkConf().setAppName("Groups").setMaster("local[*]")
+    val sc = new SparkContext(conf)
+    val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+
+    val input = sc.textFile(inputFile)
+
+    val words = input.flatMap(word => word.split(" "))
+    val counts = words.map(word => (word,1)).reduceByKey{case(x,y) => x+y}
+    counts.saveAsTextFile(outputFile)
+
+    val ss = sqlContext.read.json("D:/Sem II/PB/Project 2/out.txt")
+    val output = ss.toDF()
+    val out = output.registerTempTable("out")
+    ss.createOrReplaceTempView("out")
+    ss.show()
+
+    val fwriter = new PrintWriter(new File("newFile.txt"))
+    var x = ""
+
+    if(ss.col("`_corrupt_record`") == (x,1)){
+    val uniq = {sqlContext.sql("SELECT * FROM out WHERE _corrupt_record like '%(x,1)%'")}
+      printToFile(new File("uniq.txt")) { p =>  uniq.collect().foreach(p.println)}
+      uniq.show()
+    }
+    else{
+    val dupl = {sqlContext.sql("SELECT * FROM out WHERE _corrupt_record not like '%(x,1)%'")}
+      printToFile(new File("dupl.txt")) { p =>  dupl.collect().foreach(p.println)}
+      dupl.show()
+    }
+
+
+    def printToFile(f: java.io.File)(op: java.io.PrintWriter => Unit) {
+      val p = new java.io.PrintWriter(f)
+      try { op(p) } finally { p.close() }
+    }
+
+    sc.stop()
+  }
+}

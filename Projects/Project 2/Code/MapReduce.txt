@@ -1,0 +1,39 @@
+import org.apache.spark.{SparkConf, SparkContext}
+import java.io.{File, PrintWriter}
+
+/**
+  * Created by Sri Sai Anusha on 26-03-2017.
+  */
+
+object MapReduce {
+
+  def main(args: Array[String]): Unit = {
+    System.setProperty("hadoop.home.dir", "C:\\Users\\Sri Sai Anusha\\Desktop\\Winutils")
+    val conf = new SparkConf().setAppName("Groups").setMaster("local[*]")
+    val sc = new SparkContext(conf)
+    val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+    val inputFile = sc.textFile("D:/Sem II/PB/Project 2/pbtweets.txt")
+    val mapreduce = sqlContext.read.json("D:/Sem II/PB/Project 2/pbtweets.txt")
+    val hashtagdf = mapreduce.toDF()
+    val dftab = hashtagdf.registerTempTable("dftab")
+    mapreduce.createOrReplaceTempView("dftab");
+    mapreduce.printSchema();
+    hashtagdf.collectAsList()
+
+    val group=sqlContext.sql("SELECT text FROM dftab")
+    group.toString().toLowerCase()
+    group.show()
+
+    val fwriter = new PrintWriter(new File("newFile.txt"))
+    printToFile(new File("output.txt")) { p =>  group.collect().foreach(p.println)}
+
+    def printToFile(f: java.io.File)(op: java.io.PrintWriter => Unit) {
+      val p = new java.io.PrintWriter(f)
+      try { op(p) } finally { p.close() }
+    }
+
+    sc.stop()
+
+
+  }
+}
