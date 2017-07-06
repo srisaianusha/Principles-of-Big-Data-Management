@@ -1,0 +1,41 @@
+import org.apache.spark.{SparkConf, SparkContext}
+
+/**
+  * Created by Sri Sai Anusha on 05-03-2017.
+  */
+
+object TopTen{
+  def main(args: Array[String]): Unit = {
+    val sparkConf = new SparkConf().setAppName("SparkWordCount").setMaster("local[*]")
+
+    val sc = new SparkContext(sparkConf)
+
+    // Contains SQLContext which is necessary to execute SQL queries
+    val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+
+    // Reads json file and stores in a variable
+    val tweet = sqlContext.read.json("D:\\Sem II\\PB\\Project 1\\PB\\tweets.json")
+    //val textFile = sc.textFile("D:\\Sem II\\PB\\Project 1\\PB\\tweets.json")
+
+
+    //To register tweets data as a table
+    tweet.createOrReplaceTempView("tweets")
+
+    val disCat = {
+      sqlContext.sql("SELECT SUBSTR(text, LOCATE('#', text)) hashtag FROM tweets WHERE text like '%#%' order by hashtag")
+    }
+
+    disCat.createOrReplaceTempView("disCatresult")
+    val op = sqlContext.sql("select hashtag, COUNT(*) from disCatresult GROUP BY hashtag order by hashtag")
+
+    op.createOrReplaceTempView("result")
+
+    op.show()
+    val output = sqlContext.sql("select * from result ORDER BY `count(1)` DESC")
+    output.createOrReplaceTempView("top")
+    output.show(16)
+
+
+  }
+}
+

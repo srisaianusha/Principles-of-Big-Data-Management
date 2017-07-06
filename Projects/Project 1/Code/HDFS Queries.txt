@@ -1,0 +1,66 @@
+import org.apache.spark
+import org.apache.spark.{SparkConf, SparkContext}
+import java.io.{File, PrintWriter}
+/**
+  * Created by Sri Sai Anusha on 05-03-2017.
+  */
+
+object Queries{
+  def main(args: Array[String]): Unit = {
+    System.setProperty("hadoop.home.dir","C:\\Users\\Sri Sai Anusha\\Desktop\\Winutils")
+    val conf = new SparkConf().setAppName("Queries").setMaster("local[*]")
+    val sc = new SparkContext(conf)
+    val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+    val inputFile = sc.textFile("D:/Sem II/PB/Project 1/PB/pbtweets.txt")
+    val hashtags= sqlContext.read.json("D:/Sem II/PB/Project 1/PB/pbtweets.txt")
+    val hashtagdf=hashtags.toDF()
+    val dftab= hashtagdf.registerTempTable("dftab")
+    hashtags.createOrReplaceTempView("dftab");
+    hashtags.printSchema();
+    hashtagdf.collectAsList()
+    val blackhist=sqlContext.sql("select * from dftab where user.description like '%#python%' AND text like '%#python%'")
+     val npm=sqlContext.sql("select * from dftab where user.description like '%#npm%' OR text like '%#npm%'")
+     val fhl=sqlContext.sql("select * from dftab where user.description like '%#fakeheadlinebot%' OR text like '%#fakeheadlinebot%'")
+     val js=sqlContext.sql("select * from dftab where user.description like '%#JavaScript%' OR text like '%#JavaScript%'")
+     val ais=sqlContext.sql("select * from dftab where user.description like '%#AI Consulting%' OR text like '%#AI Consulting%'")
+     val cloud=sqlContext.sql("select * from dftab where user.description like '%#Cloud%' OR text like '%#Cloud%'")
+     val kps=sqlContext.sql("select * from dftab where user.description like '%#KCAPinoyStar%' OR text like '%#KCAPinoyStar%'")
+     val azure=sqlContext.sql("select * from dftab where user.description like '%#Azure%' OR text like '%#Azure%'")
+     val pgn=sqlContext.sql("select * from dftab where user.description like '%#PondsGirlNaddie%' OR text like '%#PondsGirlNaddie%'")
+     val javascript=sqlContext.sql("select * from dftab where user.description like '%#javascript%' OR text like '%#javascript%'")
+     val others=sqlContext.sql("select * from dftab where user.description not like '%#python%' AND user.description not like'%#npm%' AND user.description not like'%#fakeheadlinebot%' AND user.description not like'%#JavaScript%' AND user.description not like '%#AI Consulting%' AND user.description not like '%#Cloud%' AND user.description not like '%#KCAPinoyStar%' AND user.description not like '%#Azure%' OR text not like '%#python%' OR text not like '%#npm%' OR text not like '%#fakeheadlinebot%' OR text not like '%#JavaScript%' OR text not like '%#AI Consulting%' OR text not like '%#Cloud%' OR text not like '%#KCAPinoyStar%' OR text not like '%#PondsGirlNaddie%'")
+     val none=sqlContext.sql("select * from dftab where user.description not like '%#%' OR text not like '%#%'")
+     blackhist.show()
+     npm.show()
+    fhl.show()
+    js.show()
+    ais.show()
+    cloud.show()
+    kps.show()
+    azure.show()
+    pgn.show()
+    javascript.show()
+    others.show()
+    none.show()
+    val fwriter = new PrintWriter(new File("newFile.txt"))
+    printToFile(new File("blackhist.txt")) { p =>  blackhist.collect().foreach(p.println)}
+    printToFile(new File("npm.txt")) { p =>  npm.collect().foreach(p.println)}
+    printToFile(new File("fhl.txt")) { p =>  fhl.collect().foreach(p.println)}
+    printToFile(new File("js.txt")) { p =>  js.collect().foreach(p.println)}
+    printToFile(new File("ais.txt")) { p =>  ais.collect().foreach(p.println)}
+    printToFile(new File("cloud.txt")) { p =>  cloud.collect().foreach(p.println)}
+    printToFile(new File("kps.txt")) { p =>  kps.collect().foreach(p.println)}
+    printToFile(new File("azure.txt")) { p =>  azure.collect().foreach(p.println)}
+    printToFile(new File("pgn.txt")) { p =>  pgn.collect().foreach(p.println)}
+    printToFile(new File("javascript.txt")) { p =>  javascript.collect().foreach(p.println)}
+    printToFile(new File("others.txt")) { p =>  others.collect().foreach(p.println)}
+    printToFile(new File("none.txt")) { p =>  none.collect().foreach(p.println)}
+    def printToFile(f: java.io.File)(op: java.io.PrintWriter => Unit) {
+      val p = new java.io.PrintWriter(f)
+      try { op(p) } finally { p.close() }
+    }
+
+    sc.stop()
+
+  }
+}
