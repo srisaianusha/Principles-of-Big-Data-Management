@@ -1,0 +1,36 @@
+import org.apache.spark.sql.functions._
+import org.apache.spark.{SparkConf, SparkContext}
+
+/**
+  * Created by Sri Sai Anusha on 19-04-2017.
+  */
+
+//Top 10 users based on tweet_volume
+object DataFrame {
+  def main(args: Array[String]): Unit = {
+    System.setProperty("hadoop.home.dir", "C:\\Users\\Sri Sai Anusha\\Desktop\\Winutils")
+    val conf = new SparkConf().setAppName("Queries").setMaster("local[*]")
+    val sc = new SparkContext(conf)
+    val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+    import sqlContext.implicits._
+
+    val tweets = sqlContext.read.json("D:/Sem II/PB/Project 3/trends.txt").toDF()
+    val trends = tweets.select(explode($"details.trends").as("trend"))
+    trends.printSchema()
+
+    val tweet = sqlContext.read.json("D:\\Sem II\\PB\\Project 1\\PB\\tweets.json")
+    tweet.createOrReplaceTempView("tweets")
+
+    val names = trends.select(explode($"trend.name").as("names"))
+    names.printSchema()
+    names.createOrReplaceTempView("names")
+
+    val output = sqlContext.sql("SELECT t.text as text,d.names as hashtags from tweets t " +
+      "JOIN names d on t.text like CONCAT('%',d.names,'%')")
+    output.show()
+
+    output.write.option("collection", "trends").mode("overwrite").format("com.mongodb.spark.sql").save()
+
+
+  }
+}

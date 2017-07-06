@@ -1,0 +1,182 @@
+import org.apache.spark.{SparkConf, SparkContext}
+
+
+/**
+  * Created by Sri Sai Anusha on 17-04-2017.
+  */
+
+object RDD {
+  def main(args: Array[String]): Unit = {
+    System.setProperty("hadoop.home.dir", "C:\\Users\\Sri Sai Anusha\\Desktop\\Winutils")
+    val conf = new SparkConf().setAppName("Queries").setMaster("local[*]")
+    val sc = new SparkContext(conf)
+    val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+
+    val tweet= sqlContext.read.json("D:/Sem II/PB/Project 3/tweets.json")
+    tweet.createOrReplaceTempView("tweets")
+
+    // User who tweeted more from US state
+    val r1 = sqlContext.sql("SELECT user.name, 'Alabama' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Alabama'" +
+      " GROUP BY user.name")
+    val r2 = sqlContext.sql("SELECT user.name, 'Alaska' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Alaska'" +
+      " GROUP BY user.name")
+    val r3 = sqlContext.sql("SELECT user.name, 'Arizona' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Arizona'" +
+      " GROUP BY user.name")
+    val r4 = sqlContext.sql("SELECT user.name, 'Arkansas' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Arkansas'" +
+      " GROUP BY user.name")
+    val r5 = sqlContext.sql("SELECT user.name, 'California' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='California'" +
+      " GROUP BY user.name")
+    val r6 = sqlContext.sql("SELECT user.name, 'Colorado' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Colorado'" +
+      " GROUP BY user.name")
+    val r7 = sqlContext.sql("SELECT user.name, 'Connecticut' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Connecticut'" +
+      " GROUP BY user.name")
+    val r8 = sqlContext.sql("SELECT user.name, 'Delaware' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Delaware'" +
+      " GROUP BY user.name")
+    val r9 = sqlContext.sql("SELECT user.name, 'Florida' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Florida'" +
+      " GROUP BY user.name")
+    val r10 = sqlContext.sql("SELECT user.name, 'Georgia' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Georgia'" +
+      " GROUP BY user.name")
+    val r11 = sqlContext.sql("SELECT user.name, 'Hawaii' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Hawaii'" +
+      " GROUP BY user.name")
+    val r12 = sqlContext.sql("SELECT user.name, 'Idaho' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Idaho'" +
+      " GROUP BY user.name")
+    val r13 = sqlContext.sql("SELECT user.name, 'Illinois' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Illinois'" +
+      " GROUP BY user.name")
+    val r14 = sqlContext.sql("SELECT user.name, 'Indiana' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Indiana'" +
+      " GROUP BY user.name")
+    val r15 = sqlContext.sql("SELECT user.name, 'Iowa' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Iowa'" +
+      " GROUP BY user.name")
+    val r16 = sqlContext.sql("SELECT user.name, 'Kansas' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Kansas'" +
+      " GROUP BY user.name")
+    val r17 = sqlContext.sql("SELECT user.name, 'Kentucky' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Kentucky'" +
+      " GROUP BY user.name")
+    val r18 = sqlContext.sql("SELECT user.name, 'Louisiana' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Louisiana'" +
+      " GROUP BY user.name")
+    val r19 = sqlContext.sql("SELECT user.name, 'Maine' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Maine'" +
+      " GROUP BY user.name")
+    val r20 = sqlContext.sql("SELECT user.name, 'Maryland' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Maryland'" +
+      " GROUP BY user.name")
+    val r21 = sqlContext.sql("SELECT user.name, 'Massachusetts' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Massachusetts'" +
+      " GROUP BY user.name")
+    val r22 = sqlContext.sql("SELECT user.name, 'Michigan' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Michigan'" +
+      " GROUP BY user.name")
+    val r23 = sqlContext.sql("SELECT user.name, 'Minnesota' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Minnesota'" +
+      " GROUP BY user.name")
+    val r24 = sqlContext.sql("SELECT user.name, 'Mississippi' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Mississippi'" +
+      " GROUP BY user.name")
+    val r25 = sqlContext.sql("SELECT user.name, 'Missouri' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Missouri'" +
+      " GROUP BY user.name")
+    val r26 = sqlContext.sql("SELECT user.name, 'Montana' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Montana'" +
+      " GROUP BY user.name")
+    val r27 = sqlContext.sql("SELECT user.name, 'Nebraska' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Nebraska'" +
+      " GROUP BY user.name")
+    val r28 = sqlContext.sql("SELECT user.name, 'Nevada' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Nevada'" +
+      " GROUP BY user.name")
+    val r29 = sqlContext.sql("SELECT user.name, 'New Hampshire' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='New Hampshire'" +
+      " GROUP BY user.name")
+    val r30 = sqlContext.sql("SELECT user.name, 'New Jersey' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='New Jersey'" +
+      " GROUP BY user.name")
+    val r31 = sqlContext.sql("SELECT user.name, 'New Mexico' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='New Mexico'" +
+      " GROUP BY user.name")
+    val r32 = sqlContext.sql("SELECT user.name, 'New York' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='New York'" +
+      " GROUP BY user.name")
+    val r33 = sqlContext.sql("SELECT user.name, 'North Carolina' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='North Carolina'" +
+      " GROUP BY user.name")
+    val r34 = sqlContext.sql("SELECT user.name, 'North Dakota' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='North Dakota'" +
+      " GROUP BY user.name")
+    val r35 = sqlContext.sql("SELECT user.name, 'Ohio' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Ohio'" +
+      " GROUP BY user.name")
+    val r36 = sqlContext.sql("SELECT user.name, 'Oklahoma' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Oklahoma'" +
+      " GROUP BY user.name")
+    val r37 = sqlContext.sql("SELECT user.name, 'Oregon' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Oregon'" +
+      " GROUP BY user.name")
+    val r38 = sqlContext.sql("SELECT user.name, 'Pennsylvania' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Pennsylvania'" +
+      " GROUP BY user.name")
+    val r39 = sqlContext.sql("SELECT user.name, 'Rhode Island' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Rhode Island'" +
+      " GROUP BY user.name")
+    val r40 = sqlContext.sql("SELECT user.name, 'South Carolina' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='South Carolina'" +
+      " GROUP BY user.name")
+    val r41 = sqlContext.sql("SELECT user.name, 'South Dakota' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='South Dakota'" +
+      " GROUP BY user.name")
+    val r42 = sqlContext.sql("SELECT user.name, 'Tennessee' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Tennessee'" +
+      " GROUP BY user.name")
+    val r43 = sqlContext.sql("SELECT user.name, 'Texas' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Texas'" +
+      " GROUP BY user.name")
+    val r44 = sqlContext.sql("SELECT user.name, 'Utah' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Utah'" +
+      " GROUP BY user.name")
+    val r45 = sqlContext.sql("SELECT user.name, 'Vermont' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Vermont'" +
+      " GROUP BY user.name")
+    val r46 = sqlContext.sql("SELECT user.name, 'Virginia' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Virginia'" +
+      " GROUP BY user.name")
+    val r47 = sqlContext.sql("SELECT user.name, 'Washington' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Washington'" +
+      " GROUP BY user.name")
+    val r48 = sqlContext.sql("SELECT user.name, 'West Virginia' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='West Virginia'" +
+      " GROUP BY user.name")
+    val r49 = sqlContext.sql("SELECT user.name, 'Wisconsin' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Wisconsin'" +
+      " GROUP BY user.name")
+    val r50 = sqlContext.sql("SELECT user.name, 'Wyoming' as location, count(*) as count" +
+      " FROM tweets WHERE user.location ='Wyoming'" +
+      " GROUP BY user.name")
+
+    val group = r1.union(r2).union(r3).union(r4).union(r5).union(r6).union(r7).union(r8).union(r9).union(r10).union(r11).union(r12).union(r13).union(r14).union(r15).union(r16).union(r17).union(r18).union(r19).union(r20).union(r21).union(r22).union(r23).union(r24).union(r25).union(r26).union(r27).union(r28).union(r29).union(r30).union(r31).union(r32).union(r33).union(r34).union(r35).union(r36).union(r37).union(r38).union(r39).union(r40).union(r41).union(r42).union(r43).union(r44).union(r45).union(r46).union(r47).union(r48).union(r49).union(r50)
+
+    group.createOrReplaceTempView("output")
+
+    val rdd = sqlContext.sql("SELECT * from output ORDER BY count DESC")
+    rdd.createOrReplaceTempView("result")
+    rdd.show()
+
+    rdd.write.option("collection", "rdd").mode("overwrite").format("com.mongodb.spark.sql").save()
+
+
+  }
+}

@@ -1,0 +1,24 @@
++--------------------+--------------+-----+
+|                name|      location|count|
++--------------------+--------------+-----+
+|     Patrick Sanders|      Arkansas|   21|
+|  Ruby and Rails Log|      New York|   15|
+|  Ruby On Rails Jobs|      New York|   10|
+|     Brenda B Taylor|         Texas|    9|
+|   Torgeir Helgevold|      New York|    7|
+|          Uli Kunkel|    New Jersey|    5|
+|ClearanceJobs.com NE|      Nebraska|    5|
+|    AMagnificentMess|    California|    4|
+|      Rachel Hawkins|       Alabama|    3|
+|         Alfred Hill|    California|    3|
+|       Darin S. Lory|      New York|    3|
+|       Cynthia Woolf|      Colorado|    3|
+|      Loretta McComb|North Carolina|    3|
+|   Sherri Antonuccio|        Oregon|    3|
+|    MN Vikings Store|     Minnesota|    3|
+|                 Dot|     Wisconsin|    3|
+|            courtney|       Georgia|    2|
+|         maryricksen|       Florida|    2|
+|          GOLDEN BOY|       Florida|    2|
+|               randy|      Kentucky|    2|
++--------------------+--------------+-----+

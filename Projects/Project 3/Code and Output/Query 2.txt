@@ -1,0 +1,27 @@
+import org.apache.spark.{SparkConf, SparkContext}
+
+
+/**
+  * Created by Sri Sai Anusha on 28-04-2017.
+  */
+
+object Spark {
+  def main(args: Array[String]): Unit = {
+    System.setProperty("hadoop.home.dir", "C:\\Users\\Sri Sai Anusha\\Desktop\\Winutils")
+    val conf = new SparkConf().setAppName("Queries").setMaster("local[*]")
+    val sc = new SparkContext(conf)
+    val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+
+    //Tweets obtained from different locations
+    val text = sc.textFile("D:/Sem II/PB/Project 3/tweets.txt")
+    val tweet = sqlContext.read.json("D:/Sem II/PB/Project 3/tweets.json")
+    tweet.registerTempTable("table")
+    tweet.createOrReplaceTempView("table")
+
+    val que = sqlContext.sql("SELECT user.location, count(*) as count FROM table " +
+      "GROUP BY user.location ORDER BY count DESC")
+    que.show(25)
+
+    que.write.option("collection", "spark").mode("overwrite").format("com.mongodb.spark.sql").save()
+  }
+}

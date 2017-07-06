@@ -1,0 +1,29 @@
++-----------------+-----+
+|         location|count|
++-----------------+-----+
+|             null|19955|
+|               UK| 1024|
+|    United States|  993|
+| Bengaluru, India|  793|
+|       Yogyakarta|  614|
+|    Paris, France|  511|
+|  London, England|  369|
+|              USA|  368|
+|           London|  287|
+|     The Internet|  277|
+|     Your Console|  277|
+|            India|  237|
+|San Francisco, CA|  203|
+|      Everywhere |  203|
+|           France|  199|
+|    The interwebs|  198|
+|               CN|  194|
+|      Somerset UK|  189|
+|               **|  187|
+|       Texas, USA|  150|
+|        Worldwide|  149|
+|            Tokyo|  140|
+|  Los Angeles, CA|  139|
+|            india|  138|
+|         Internet|  134|
++-----------------+-----+
